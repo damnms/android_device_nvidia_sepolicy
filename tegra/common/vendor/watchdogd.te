@@ -1,0 +1,7 @@
+# Files in the recovery ramdisk are labeled rootfs, so watchdogd needs
+# entrypoint on rootfs to start there. Without it the tegra watchdog
+# is never petted and resets the device after about 120 seconds.
+recovery_only(`
+  allow watchdogd rootfs:dir r_dir_perms;
+  allow watchdogd rootfs:file { entrypoint rx_file_perms };
+')
